@@ -20,6 +20,35 @@ func Test_Sha1(t *testing.T) {
 	})
 }
 
+func Test_HmacSha1(t *testing.T) {
+	// empty key
+	key := ""
+	cases := map[string]string{
+		"e99p1ant":               "58f04bb1bab728a57996f38d34f3e00584a8c5f8",
+		"大大大茄子":                  "3a996c5b3d1e5aad530416170d28c59a0f5bb932",
+		"":                       "fbdb1d1b18aa6c08324b7d64b71fb76370690e1d",
+		"!@#$%^&*()*&^%$#$%^&*(": "e8cd4d613044a333a8cf3de2e80b2477be873c87",
+	}
+	Convey("HmacSha1 string, empty key", t, func() {
+		for raw, result := range cases {
+			So(HmacSha1(raw, key), ShouldEqual, result)
+		}
+	})
+
+	key = "e99"
+	cases = map[string]string{
+		"e99p1ant":               "819dbada1c4ae382980251906612cce1ab481d87",
+		"大大大茄子":                  "71a4122e455fa78cd49027babc9675923819d81c",
+		"":                       "f8744be95d7f51864d77b003e642931ff0f62e25",
+		"!@#$%^&*()*&^%$#$%^&*(": "4563ff913bc7d5fd65f833ad0cd1a35c7e0d7ddd",
+	}
+	Convey("HmacSha1 string, key: e99", t, func() {
+		for raw, result := range cases {
+			So(HmacSha1(raw, key), ShouldEqual, result)
+		}
+	})
+}
+
 func Test_Md5(t *testing.T) {
 	cases := map[string]string{
 		"e99p1ant":               "0b6032c6ec55da4e03587e48d7e05c69",
@@ -30,34 +59,6 @@ func Test_Md5(t *testing.T) {
 	Convey("md5 string", t, func() {
 		for raw, result := range cases {
 			So(Md5(raw), ShouldEqual, result)
-		}
-	})
-}
-
-func Test_Base64Encode(t *testing.T) {
-	cases := map[string]string{
-		"e99p1ant":               "ZTk5cDFhbnQ=",
-		"大大大茄子":                  "5aSn5aSn5aSn6IyE5a2Q",
-		"":                       "",
-		"!@#$%^&*()*&^%$#$%^&*(": "IUAjJCVeJiooKSomXiUkIyQlXiYqKA==",
-	}
-	Convey("base64 encode string", t, func() {
-		for raw, result := range cases {
-			So(Base64Encode(raw), ShouldEqual, result)
-		}
-	})
-}
-
-func Test_Base64Decode(t *testing.T) {
-	cases := map[string]string{
-		"ZTk5cDFhbnQ=":                     "e99p1ant",
-		"5aSn5aSn5aSn6IyE5a2Q":             "大大大茄子",
-		"":                                 "",
-		"IUAjJCVeJiooKSomXiUkIyQlXiYqKA==": "!@#$%^&*()*&^%$#$%^&*(",
-	}
-	Convey("base64 decode string", t, func() {
-		for raw, result := range cases {
-			So(Base64Decode(raw), ShouldEqual, result)
 		}
 	})
 }

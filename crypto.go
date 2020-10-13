@@ -1,34 +1,31 @@
 package gadget
 
 import (
+	"crypto/hmac"
 	"crypto/md5"
 	"crypto/sha1"
-	"encoding/base64"
 	"encoding/hex"
 	"fmt"
-	"io/ioutil"
-	"strings"
+	"io"
 )
 
+// Sha1: sha1 string.
 func Sha1(raw string) string {
 	h := sha1.New()
 	h.Write([]byte(raw))
 	return fmt.Sprintf("%x", h.Sum(nil))
 }
 
+// HmacSha1: HMAC SHA1 string.
+func HmacSha1(input string, key string) string {
+	h := hmac.New(sha1.New, []byte(key))
+	_, _ = io.WriteString(h, input)
+	return fmt.Sprintf("%x", h.Sum(nil))
+}
+
+// Md5: md5 string.
 func Md5(raw string) string {
 	h := md5.New()
 	h.Write([]byte(raw))
 	return hex.EncodeToString(h.Sum(nil))
-}
-
-func Base64Encode(raw string) string {
-	return base64.StdEncoding.EncodeToString([]byte(raw))
-}
-
-func Base64Decode(raw string) string {
-	reader := strings.NewReader(raw)
-	decoder := base64.NewDecoder(base64.StdEncoding, reader)
-	str, _ := ioutil.ReadAll(decoder)
-	return string(str)
 }
