@@ -3,8 +3,8 @@ package gadget
 import "fmt"
 
 // MakeErrJSON makes the error response JSON for gin.
-func MakeErrJSON(errCode int, msg interface{}) (int, interface{}) {
-	return errCode / 100, map[string]interface{}{"error": errCode, "msg": fmt.Sprint(msg)}
+func MakeErrJSON(errCode int, msg string, a ...interface{}) (int, interface{}) {
+	return errCode / 100, map[string]interface{}{"error": errCode, "msg": fmt.Sprintf(msg, a...)}
 }
 
 // MakeSuccessJSON makes the successful response JSON for gin.
