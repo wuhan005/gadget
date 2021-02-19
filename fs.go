@@ -36,7 +36,7 @@ func (f *embedFS) Open(name string) (http.File, error) {
 	if filepath.Separator != '/' && strings.ContainsRune(name, filepath.Separator) {
 		return nil, errors.New("http: invalid character in file path")
 	}
-	fullName := filepath.Join(f.path, filepath.FromSlash(path.Clean(name)))
+	fullName := filepath.Join(f.path, filepath.FromSlash(path.Clean("/"+name)))
 	file, err := f.embed.Open(fullName)
 	return &ioFile{
 		File: file,
