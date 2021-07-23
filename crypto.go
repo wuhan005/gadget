@@ -12,7 +12,7 @@ import (
 // Sha1 sha1 string.
 func Sha1(raw string) string {
 	h := sha1.New()
-	h.Write([]byte(raw))
+	_, _ = h.Write([]byte(raw))
 	return fmt.Sprintf("%x", h.Sum(nil))
 }
 
@@ -26,6 +26,6 @@ func HmacSha1(input string, key string) string {
 // Md5 md5 string.
 func Md5(raw string) string {
 	h := md5.New()
-	h.Write([]byte(raw))
+	_, _ = h.Write([]byte(raw))
 	return hex.EncodeToString(h.Sum(nil))
 }
