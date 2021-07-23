@@ -7,12 +7,12 @@ import (
 	"strings"
 )
 
-// Base64Encode: base64 encode string.
+// Base64Encode encodes base64 string.
 func Base64Encode(raw string) string {
 	return base64.StdEncoding.EncodeToString([]byte(raw))
 }
 
-// Base64Decode: base64 decode string.
+// Base64Decode decodes base64 string.
 func Base64Decode(raw string) string {
 	reader := strings.NewReader(raw)
 	decoder := base64.NewDecoder(base64.StdEncoding, reader)
@@ -20,12 +20,12 @@ func Base64Decode(raw string) string {
 	return string(str)
 }
 
-// URLEncode: url encode string.
+// URLEncode encodes URL string.
 func URLEncode(raw string) string {
 	return url.QueryEscape(raw)
 }
 
-// URLDecode: url decode string.
+// URLDecode decode URL string.
 func URLDecode(raw string) string {
 	str, _ := url.QueryUnescape(raw)
 	return str

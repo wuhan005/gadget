@@ -9,21 +9,21 @@ import (
 	"io"
 )
 
-// Sha1: sha1 string.
+// Sha1 sha1 string.
 func Sha1(raw string) string {
 	h := sha1.New()
 	h.Write([]byte(raw))
 	return fmt.Sprintf("%x", h.Sum(nil))
 }
 
-// HmacSha1: HMAC SHA1 string.
+// HmacSha1 HMAC SHA1 string.
 func HmacSha1(input string, key string) string {
 	h := hmac.New(sha1.New, []byte(key))
 	_, _ = io.WriteString(h, input)
 	return fmt.Sprintf("%x", h.Sum(nil))
 }
 
-// Md5: md5 string.
+// Md5 md5 string.
 func Md5(raw string) string {
 	h := md5.New()
 	h.Write([]byte(raw))
